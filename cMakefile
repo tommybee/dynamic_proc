@@ -1,0 +1,47 @@
+#TARGET		= sample
+TARGET		= dblib
+MY_HOME     =.
+ORACLE_HOME	=/C/DEV/COMP/OracleClient32
+CC			= gcc
+EXE			= test
+PROC		= proc
+RM			= rm -rf
+COPY		= cp
+ECHO		= echo
+C_LIBS		= -L$(ORACLE_HOME) -loci12 -lorasql12
+                                     
+PROCINC		=include=$(ORACLE_HOME)/precomp \
+			include=$(ORACLE_HOME)/sdk/include \
+			include=/mingw/i686-w64-mingw32/include \
+			include=/mingw/i686-w64-mingw32/lib
+			
+#CFLAGS		= -D_DEBUG -D_REENTRANT  -c -g -r -w -O
+CFLAGS		= -D_DEBUG -D_REENTRANT
+CINCL		= -I. -I$(ORACLE_HOME)/sdk/include 
+OBJ_OPT		= -D_CRON -D_DEBUG
+
+ORA_OPT	= PARSE=PARTIAL RELEASE_CURSOR=YES MODE=ANSI CODE=ANSI_C
+#ORA_OPT	= PARSE=FULL RELEASE_CURSOR=YES MODE=ANSI CODE=ANSI_C
+#ORA_OPT	= PARSE=PARTIAL MODE=ANSI
+OBJECTS		= dblib.o test.o
+ORA_GARBAGE	= *.dcl *.cod *.cud *.lis
+
+######## implicit rules
+.SUFFIXES: .pc .c
+.pc.c:
+	@$(ECHO) "@$(PROC) iname=$< $(PROCINC) $(ORA_OPT)"
+	@$(PROC) iname=$< $(PROCINC) $(ORA_OPT)
+ 
+.c.o:
+	@$(ECHO) "@$(CC)  $(CFLAGS) -c $< -o $@..c...compile"
+	@$(CC)  $(CFLAGS) $(CINCL) -c $< -o $@
+	
+
+####### build rules
+all:	$(TARGET)
+$(TARGET):	$(OBJECTS)
+	@$(ECHO) "@$(CC) $(OBJ_OPT) -o $(EXE) $(OBJECTS) $(C_LIBS)  ....linking.."
+	@$(CC) $(OBJ_OPT) -o $(EXE) $(OBJECTS) $(C_LIBS)
+	
+clean:
+	@$(RM) $(EXE) $(OBJECTS) $(ORA_GARBAGE)
