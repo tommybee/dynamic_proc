@@ -1,14 +1,14 @@
 /* --------------------------------------------------------------------------------
-ÆÄÀÏ ÀÌ¸§ : test.c
-°³¹ß ÀÏÀÚ : 2002-10-28
-ÀÛ¼ºÀÚ : ·ù¸íÈ¯
+íŒŒì¼ ì´ë¦„ : test.c
+ê°œë°œ ì¼ì : 2002-10-28
+ì‘ì„±ì : ë¥˜ëª…í™˜
 -------------------------------------------------------------------------------- */
 
 /*
  * test.c
- * dblib.c ¸¦ »ç¿ëÇÏ¿© SQL ¹®ÀåÀ» µ¿ÀûÀ¸·Î ÇÒ´çÇÑ ¿¹Á¦
- * ¸ğµç ÇÔ¼ö ¼öÇà¿¡ ret º¯¼ö¿¡ °á°ú¸¦ ¹Ş´Â´Ù.
- * ret º¯¼ö¸¦ °Ë»çÇÏ¿© ÇÔ¼öÀÇ ½ÇÇà °á°ú¸¦ ¾Ë ¼ö ÀÖ´Ù. 
+ * dblib.c ë¥¼ ì‚¬ìš©í•˜ì—¬ SQL ë¬¸ì¥ì„ ë™ì ìœ¼ë¡œ í• ë‹¹í•œ ì˜ˆì œ
+ * ëª¨ë“  í•¨ìˆ˜ ìˆ˜í–‰ì— ret ë³€ìˆ˜ì— ê²°ê³¼ë¥¼ ë°›ëŠ”ë‹¤.
+ * ret ë³€ìˆ˜ë¥¼ ê²€ì‚¬í•˜ì—¬ í•¨ìˆ˜ì˜ ì‹¤í–‰ ê²°ê³¼ë¥¼ ì•Œ ìˆ˜ ìˆë‹¤. 
  http://www.joinc.co.kr/w/Site/Database/Book/ProcPrograming/8.Dynamic_SQL
  */
 
@@ -29,7 +29,7 @@ int test_select (void)
 	strcpy (stmt, "SELECT * FROM TB_LOG_USR_LOGIN WHERE USERID = 'b_admin' AND USERIP='192.168.200.114';");
 	
 	//ret = ora_connect ("scott", "tiger", NULL);
-	ret = ora_connect_tns("Asks_test/Asks_test@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=168.154.182.72)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=ECS)))");
+	ret = ora_connect_tns("s_test/s_test@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=168.150.182.72)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=STEST)))");
 	
 	if(ret == SUCCESS)
 	{
@@ -84,7 +84,7 @@ int test_arg_select (void)
 	strcpy (stmt, "SELECT * FROM TB_LOG_USR_LOGIN WHERE USERID = :userid AND USERIP=:userip;");
 	
 	//ret = ora_connect ("scott", "tiger", NULL);
-	ret = ora_connect_tns("Asks_test/Asks_test@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=168.154.182.72)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=ECS)))");
+	ret = ora_connect_tns("s_test/s_test@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=168.150.182.72)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=STEST)))");
 	
 	if(ret == SUCCESS)
 	{
@@ -141,7 +141,7 @@ int test_arg_auto_select (void)
 	strcpy (stmt, "SELECT * FROM TB_ADDR_MAP_TEMP_REF_JIBUN WHERE BJD_CD = :bjd_cd;");
 	
 	//ret = ora_connect ("scott", "tiger", NULL);
-	ret = ora_connect_tns("Asks_test/Asks_test@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=168.154.182.72)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=ECS)))");
+	ret = ora_connect_tns("s_test/s_test@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=168.150.182.72)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=STEST)))");
 	
 	if(ret == SUCCESS)
 	{
@@ -234,7 +234,7 @@ int test_arg_auto_insert (void)
 	strcpy (stmt, sql_qry);
 	//printf("%s\n", sql_qry);
 
-	ret = ora_connect_tns("Asks_test/Asks_test@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=168.154.182.72)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=ECS)))");
+	ret = ora_connect_tns("s_test/s_test@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=168.150.182.72)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=STEST)))");
 	
 	if(ret == SUCCESS)
 	{
@@ -249,9 +249,9 @@ int test_arg_auto_insert (void)
 	}
 
 	
-	/*¿À·ù ³ª´Â ºÎºĞ ¿©±â Àâ¾Æ¾ß!!!!*/
+	/*ì˜¤ë¥˜ ë‚˜ëŠ” ë¶€ë¶„ ì—¬ê¸° ì¡ì•„ì•¼!!!!*/
 	ret = ora_bind_u_params (
-		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s", "2911012200","±¤ÁÖ±¤¿ª½Ã","µ¿±¸","ÇĞµ¿","","0","81","0","291102009001","0","15","0","2967", ""); 
+		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s", "2911012200","ê´‘ì£¼ê´‘ì—­ì‹œ","ë™êµ¬","í•™ë™","","0","81","0","291102009001","0","15","0","2967", ""); 
 		//"%s %s %s %s %s %s %s %s %s %s %s %s %s %s", "2911012200","dddd","sss","aaa","00","0","81","0","291102009001","0","15","0","2967","aa"); 
 		//"%s %s %s %s %s %s %s %s %s %s %s %s %s", "2911012200","dddd","sss","aaa","4","0","81","0","291102009001","0","15","0","2967"); 
 	
